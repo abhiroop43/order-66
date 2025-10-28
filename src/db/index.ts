@@ -8,8 +8,8 @@ const connectionString = env('DATABASE_URL');
 
 const adapter = new PrismaPg({ connectionString });
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+const globalForPrisma = globalThis as unknown as { db: PrismaClient };
 
-export const prisma = globalForPrisma.prisma || new PrismaClient({ adapter }).$extends(withAccelerate());
+export const db = globalForPrisma.db || new PrismaClient({ adapter }).$extends(withAccelerate());
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== 'production') globalForPrisma.db = db;

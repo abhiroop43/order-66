@@ -1,0 +1,48 @@
+<!-- Order 66 — Enlarged Navbar SVG logo -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 120" height="80" aria-labelledby="title desc" role="img">
+  <title id="title">Order 66 — Task management</title>
+  <desc id="desc">Logo: stylized checklist icon and the text "Order 66".</desc>
+
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="gAccent" x1="0" x2="1">
+      <stop offset="0" stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#0ea5a4"/>
+    </linearGradient>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Icon: rounded square background -->
+  <g transform="translate(0,16)">
+    <rect x="8" y="0" width="100" height="100" rx="20" fill="#0f1724" opacity="0.95" />
+    <!-- three list lines -->
+    <g transform="translate(28,20)" fill="none" stroke="#cbd5e1" stroke-linecap="round" stroke-width="5">
+      <line x1="0" y1="0" x2="50" y2="0" />
+      <line x1="0" y1="20" x2="50" y2="20" />
+      <line x1="0" y1="40" x2="50" y2="40" />
+    </g>
+
+    <!-- checkmark -->
+    <path d="M26 58 L40 74 L64 42" fill="none" stroke="url(#gAccent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- accent circles hinting at "66" -->
+    <circle cx="90" cy="30" r="6" fill="url(#gAccent)"/>
+    <circle cx="90" cy="50" r="6" fill="url(#gAccent)"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(140,80)">
+    <text x="0" y="-14" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial" font-size="40" font-weight="700" fill="#0f1724">
+      Order
+    </text>
+
+    <text x="180" y="-14" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial" font-size="40" font-weight="800" fill="url(#gAccent)">
+      66
+    </text>
+
+    <text x="0" y="20" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial" font-size="18" font-weight="500" fill="#6b7280" letter-spacing="0.3">
+      Ticket Manager
+    </text>
+  </g>
+</svg>
