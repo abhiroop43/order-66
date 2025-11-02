@@ -1,6 +1,10 @@
 'use server';
 import * as auth from '@/auth';
 
-export const signIn = async () => {
-  await auth.signIn();
+export const signInWithGoogle = async () => {
+    await auth.signIn('google');
+};
+
+export const signInWithGithub = async () => {
+    await auth.signIn('github');
 };
