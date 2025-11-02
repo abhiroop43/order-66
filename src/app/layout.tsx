@@ -30,7 +30,9 @@ export default function RootLayout({
         <body className={`${montserrat.variable} ${firaMono.variable} antialiased`}>
         <Providers>
             <Header/>
-            {children}
+            <div className="container mx-auto px-4 max-w-6xl">
+                {children}
+            </div>
         </Providers>
         </body>
         </html>

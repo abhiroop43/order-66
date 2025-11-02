@@ -86,17 +86,20 @@ model Authenticator {
 }
 
 model Ticket {
-  id           String   @id @default(cuid())
+  id         String   @id @default(cuid())
   title        String
   description  String?
-  published    Boolean  @default(false)
+  published  Boolean  @default(false)
   createdBy    String
-  createdAt    DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedBy  String?
+  updatedAt  DateTime @default(now())
   parentId     String?
-  parent       Ticket?  @relation("TicketToTicket", fields: [parentId], references: [id], onDelete: Cascade)
-  children     Ticket[] @relation("TicketToTicket")
+  parent     Ticket?  @relation("TicketToTicket", fields: [parentId], references: [id], onDelete: Cascade)
+  children   Ticket[] @relation("TicketToTicket")
   ticketType   String
   status       String
   assignedToId String
-  assignedTo   User     @relation(fields: [assignedToId], references: [id])
+  assignedTo User     @relation(fields: [assignedToId], references: [id])
+  dueDate    DateTime?
 }
