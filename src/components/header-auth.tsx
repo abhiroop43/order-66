@@ -30,7 +30,8 @@ const HeaderAuth = () => {
                 </Button>
                 <Popover placement="bottom-end">
                     <PopoverTrigger>
-                        <Avatar src={session.data.user?.image || ''}></Avatar>
+                        <Avatar src={session.data.user?.image || ''} imgProps={{referrerPolicy: "no-referrer"}}
+                                className="opacity-100" showFallback={true}></Avatar>
                     </PopoverTrigger>
                     <PopoverContent>
 
