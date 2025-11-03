@@ -86,20 +86,38 @@ model Authenticator {
 }
 
 model Ticket {
-  id         String   @id @default(cuid())
+  id           String   @id @default(cuid())
   title        String
   description  String?
-  published  Boolean  @default(false)
+  published    Boolean  @default(false)
   createdBy    String
-  createdAt  DateTime @default(now())
-  updatedBy  String?
-  updatedAt  DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedBy    String?
+  updatedAt    DateTime @default(now())
   parentId     String?
-  parent     Ticket?  @relation("TicketToTicket", fields: [parentId], references: [id], onDelete: Cascade)
-  children   Ticket[] @relation("TicketToTicket")
-  ticketType   String
-  status       String
+  parent       Ticket?  @relation("TicketToTicket", fields: [parentId], references: [id], onDelete: Cascade)
+  children     Ticket[] @relation("TicketToTicket")
+  ticketTypeId String?
+  ticketType   Lookup?  @relation("TicketTypeLookup", fields: [ticketTypeId], references: [id])
+  statusId     String?
+  status       Lookup?  @relation("TicketStatusLookup", fields: [statusId], references: [id])
   assignedToId String
-  assignedTo User     @relation(fields: [assignedToId], references: [id])
-  dueDate    DateTime?
+  assignedTo   User     @relation(fields: [assignedToId], references: [id])
+  dueDate      DateTime?
+}
+
+model Lookup {
+  id        String   @id @default(cuid())
+  typeCode  String
+  key       String
+  value     String
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedBy String?
+  updatedAt DateTime @default(now())
+  metadata  Json?
+
+  TicketsByType Ticket[] @relation("TicketTypeLookup")
+
+  TicketsByStatus Ticket[] @relation("TicketStatusLookup")
 }
