@@ -13,7 +13,9 @@ import {
     DatePicker
 } from "@heroui/react";
 import type {LookupData} from "@/db/queries/lookups";
-
+import type {UserData} from "@/db/queries/users";
+import * as actions from "@/actions";
+import {AsyncListData, useAsyncList} from "@react-stately/data";
 
 interface TaskCreateFormProps {
     ticketTypes: LookupData[];
@@ -21,6 +23,15 @@ interface TaskCreateFormProps {
 }
 
 const TaskCreateForm = ({ticketTypes, statuses}: TaskCreateFormProps) => {
+    const userLists: AsyncListData<UserData> = useAsyncList({
+        async load({filterText}) {
+            const users = await actions.fetchUsers(filterText);
+            return {
+                items: users
+            };
+        }
+    });
+
     return (
         <Form className="flex flex-col gap-4 items-center w-full max-w-sm mx-auto">
             <h3 className="text-xl font-bold">Create an Issue</h3>
@@ -63,17 +74,18 @@ const TaskCreateForm = ({ticketTypes, statuses}: TaskCreateFormProps) => {
             </Select>
 
             <Autocomplete label="Assigned To" labelPlacement="outside" name="assignedToId"
-                          placeholder="Who will work on this">
-                <AutocompleteItem
-                    key="cmhhh52te0000ivk4ds0t0r2b"
-                    startContent={
-                        <Avatar alt="Abhiroop Santra" className="w-6 h-6 opacity-100" showFallback={true}
-                                imgProps={{referrerPolicy: "no-referrer"}}
-                                src="https://lh3.googleusercontent.com/a/ACg8ocICjs80V6DQwvd5Lo-OxDf0dNNK_UslMqmvSSelby-jeHWpJoaU=s96-c"/>
-                    }
-                >
-                    Abhiroop Santra (abhiroop.santra@gmail.com)
-                </AutocompleteItem>
+                          placeholder="Who will work on this" inputValue={userLists.filterText}
+                          isLoading={userLists.isLoading} items={userLists.items}
+                          onInputChange={userLists.setFilterText}>
+                {(item) => (
+                    <AutocompleteItem key={item.id}
+                                      startContent={<Avatar alt={item.name || ""} className="w-6 h-6 opacity-100"
+                                                            showFallback={true}
+                                                            imgProps={{referrerPolicy: "no-referrer"}}
+                                                            src={item.image || ""}/>}>
+                        {item.name} ({item.email})
+                    </AutocompleteItem>
+                )}
             </Autocomplete>
 
             <DatePicker label="Due Date" labelPlacement="outside" name="dueDate"
