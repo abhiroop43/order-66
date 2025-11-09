@@ -37,14 +37,29 @@ const TaskCreateForm = ({ticketTypes, statuses}: TaskCreateFormProps) => {
     }
 
     const [selectedUserId, setSelectedUserId] = React.useState<string | null>(null);
+    const [inputValue, setInputValue] = React.useState<string>("");
 
     const onSelectionChange = (id: Key | null) => {
         if (id) {
             console.log(id);
             setSelectedUserId(id as string);
+            const selectedUser = userLists.items.find(user => user.id === id);
+            if (selectedUser) {
+                setInputValue(`${selectedUser.name} (${selectedUser.email})`);
+            }
         } else {
             setSelectedUserId(null);
+            setInputValue("");
         }
+    };
+
+    const onInputChange = (value: string) => {
+        setInputValue(value);
+        // Clear selection when user starts typing
+        if (selectedUserId) {
+            setSelectedUserId(null);
+        }
+        userLists.setFilterText(value);
     };
 
     const userLists: AsyncListData<UserData> = useAsyncList({
@@ -103,8 +118,8 @@ const TaskCreateForm = ({ticketTypes, statuses}: TaskCreateFormProps) => {
             <Autocomplete label="Assigned To" labelPlacement="outside" name="assignedToId"
                           placeholder="Who will work on this"
                           isLoading={userLists.isLoading} items={userLists.items}
-                          inputValue={userLists.getItem(selectedUserId as string)?.name || ''}
-                          onInputChange={userLists.setFilterText}
+                          inputValue={inputValue}
+                          onInputChange={onInputChange}
                           onSelectionChange={onSelectionChange}
                           selectedKey={selectedUserId}
             >
