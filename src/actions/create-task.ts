@@ -12,11 +12,9 @@ const createTaskSchema = z.object({
         .min(1, "Title is required")
         .max(500, "Title must be less than 500 characters"),
     description: z.string()
-        .min(1, "Description is required")
         .max(2000, "Description must be less than 2000 characters"),
     ticketType: z.string().min(1, "Ticket Type is required"),
     status: z.string().min(1, "Ticket Status is required"),
-    assignedToId: z.string().min(1, "Assigned To is required"),
     dueDate: z.coerce.date({error: "Must be a valid date"}),
 });
 
@@ -33,9 +31,18 @@ interface CreateTaskFormState {
 }
 
 export const createTask = async (formState: CreateTaskFormState, formData: FormData): Promise<CreateTaskFormState> => {
-    console.log(Object.fromEntries(formData));
+    const rawData = {
+        title: formData.get('title'),
+        description: formData.get('description'),
+        ticketType: formData.get('ticketType'),
+        status: formData.get('status'),
+        assignedToId: formData.get('assignedToId'),
+        dueDate: formData.get('dueDate'),
+    };
 
-    const result = createTaskSchema.safeParse(Object.fromEntries(formData));
+    console.log(rawData);
+
+    const result = createTaskSchema.safeParse(rawData);
 
     if (!result.success) {
         const flattenedErrors = result.error.flatten().fieldErrors;
@@ -44,6 +51,8 @@ export const createTask = async (formState: CreateTaskFormState, formData: FormD
             errors: flattenedErrors
         };
     }
+
+    console.log("Validation Passed");
 
     revalidatePath(paths.home());
     revalidatePath(paths.tasksDueToday());

@@ -31,6 +31,7 @@ const TaskCreateForm = ({ticketTypes, statuses}: TaskCreateFormProps) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         formData.append('assignedToId', selectedUserId || '');
+
         startTransition(() => {
             action(formData);
         });
@@ -39,9 +40,8 @@ const TaskCreateForm = ({ticketTypes, statuses}: TaskCreateFormProps) => {
     const [selectedUserId, setSelectedUserId] = React.useState<string | null>(null);
     const [inputValue, setInputValue] = React.useState<string>("");
 
-    const onSelectionChange = (id: Key | null) => {
+    const onAssignedUserSelectionChange = (id: Key | null) => {
         if (id) {
-            console.log(id);
             setSelectedUserId(id as string);
             const selectedUser = userLists.items.find(user => user.id === id);
             if (selectedUser) {
@@ -72,7 +72,8 @@ const TaskCreateForm = ({ticketTypes, statuses}: TaskCreateFormProps) => {
     });
 
     return (
-        <Form className="flex flex-col gap-4 items-center w-full max-w-sm mx-auto" onSubmit={handleSubmit}>
+        <Form className="flex flex-col gap-4 items-center w-full max-w-sm mx-auto" onSubmit={handleSubmit}
+              validationBehavior="aria">
             <h3 className="text-xl font-bold">Create an Issue</h3>
             <Input
                 label="Title"
@@ -120,7 +121,7 @@ const TaskCreateForm = ({ticketTypes, statuses}: TaskCreateFormProps) => {
                           isLoading={userLists.isLoading} items={userLists.items}
                           inputValue={inputValue}
                           onInputChange={onInputChange}
-                          onSelectionChange={onSelectionChange}
+                          onSelectionChange={onAssignedUserSelectionChange}
                           selectedKey={selectedUserId}
             >
                 {(item) => (
