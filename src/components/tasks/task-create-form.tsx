@@ -30,7 +30,7 @@ const TaskCreateForm = ({ticketTypes, statuses}: TaskCreateFormProps) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        formData.append('assignedToId', selectedUserId || '');
+        formData.set('assignedToId', selectedUserId || '');
 
         startTransition(() => {
             action(formData);

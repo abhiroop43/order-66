@@ -101,8 +101,8 @@ model Ticket {
   // ticketType   Lookup?  @relation("TicketTypeLookup", fields: [ticketTypeId], references: [id])
   status       String?
   // status       Lookup?  @relation("TicketStatusLookup", fields: [statusId], references: [id])
-  assignedToId String
-  assignedTo   User      @relation(fields: [assignedToId], references: [id])
+  assignedToId String?
+  assignedTo   User?     @relation(fields: [assignedToId], references: [id])
   dueDate      DateTime?
 }
 
