@@ -12,7 +12,7 @@ const TaskList = ({tickets}: TaskListProps) => {
     let tasks: React.ReactNode[] = [];
     if (tickets) {
         tasks = tickets.map((ticket) => (
-            <div key={ticket.id}>
+            <div key={ticket.id} className="pb-4">
                 <TaskListItem ticket={ticket}/>
             </div>
         ));

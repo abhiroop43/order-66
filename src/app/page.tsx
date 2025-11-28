@@ -1,26 +1,28 @@
 import TaskList from "@/components/tasks/task-list";
-import {auth} from "@/auth";
+import { auth } from "@/auth";
 import React from "react";
 import Greetings from "@/components/greetings";
-import {getTicketsForUser} from "@/db/queries/tasks";
+import { getTicketsForUser } from "@/db/queries/tasks";
 
 const Home = async () => {
-    const session = await auth();
-    const userId = session?.user?.id;
+  const session = await auth();
+  const userId = session?.user?.id;
 
-    let homePageContent: React.ReactNode;
+  let homePageContent: React.ReactNode;
 
-    if (userId) {
-        const tickets = await getTicketsForUser(userId);
-        console.log(tickets);
-        homePageContent = (<div className="flex items-center justify-center">
-            <TaskList tickets={tickets}/>
-        </div>);
-    } else {
-        homePageContent = <Greetings/>;
-    }
+  if (userId) {
+    const tickets = await getTicketsForUser(userId);
+    console.log(tickets);
+    homePageContent = (
+      <div className="flex flex-col justify-center w-full px-10">
+        <TaskList tickets={tickets} />
+      </div>
+    );
+  } else {
+    homePageContent = <Greetings />;
+  }
 
-    return homePageContent;
-}
+  return homePageContent;
+};
 
 export default Home;
