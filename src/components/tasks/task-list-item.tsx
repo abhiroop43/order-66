@@ -1,22 +1,36 @@
 "use client";
 
 import type { TicketData } from "@/db/queries/tasks";
-import { Card, CardHeader, CardBody, CardFooter, Button } from "@heroui/react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@heroui/react";
 import Image from "next/image";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import * as actions from "@/actions";
+import { useRouter } from "next/navigation";
 
 interface TaskListItemProps {
   ticket: TicketData;
 }
 
 const TaskListItem = ({ ticket }: TaskListItemProps) => {
+  const router = useRouter();
+
   const navigateToEditTask = (ticketId: string) => {
-    // Navigation logic to edit task page
+    router.push(`/tasks/${ticketId}`);
   };
 
   const deleteTask = (ticketId: string) => {
-    // Logic to delete the task
+    actions.deleteTask(ticketId);
   };
+
   return (
     <Card fullWidth={true}>
       <CardHeader className="text-3xl font-bold flex justify-between items-center">
@@ -31,14 +45,25 @@ const TaskListItem = ({ ticket }: TaskListItemProps) => {
           >
             <PencilSquareIcon className="h-6 w-6" />
           </Button>
-          <Button
-            onPress={() => deleteTask(ticket.id)}
-            variant="light"
-            aria-label="Delete Task"
-            className="text-red-600 hover:text-red-800 transition"
-          >
-            <TrashIcon className="h-6 w-6" />
-          </Button>
+
+          <Popover placement="right">
+            <PopoverTrigger>
+              <Button
+                onPress={() => deleteTask(ticket.id)}
+                variant="light"
+                aria-label="Delete Task"
+                className="text-red-600 hover:text-red-800 transition"
+              >
+                <TrashIcon className="h-6 w-6" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <div className="px-1 py-2">
+                <div className="text-small font-bold">Popover Content</div>
+                <div className="text-tiny">This is the popover content</div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </CardHeader>
       <CardBody>
