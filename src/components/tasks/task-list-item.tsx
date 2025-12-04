@@ -15,6 +15,7 @@ import Image from "next/image";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import * as actions from "@/actions";
 import { useRouter } from "next/navigation";
+import React from "react";
 
 interface TaskListItemProps {
   ticket: TicketData;
@@ -46,10 +47,9 @@ const TaskListItem = ({ ticket }: TaskListItemProps) => {
             <PencilSquareIcon className="h-6 w-6" />
           </Button>
 
-          <Popover placement="right">
+          <Popover backdrop="blur" placement="right">
             <PopoverTrigger>
               <Button
-                onPress={() => deleteTask(ticket.id)}
                 variant="light"
                 aria-label="Delete Task"
                 className="text-red-600 hover:text-red-800 transition"
@@ -59,8 +59,20 @@ const TaskListItem = ({ ticket }: TaskListItemProps) => {
             </PopoverTrigger>
             <PopoverContent>
               <div className="px-1 py-2">
-                <div className="text-small font-bold">Popover Content</div>
-                <div className="text-tiny">This is the popover content</div>
+                <div className="text-medium font-bold">Are you sure?</div>
+                <div className="text-small text-gray-600">
+                  This will permanently delete the ticket.
+                </div>
+                <div className="flex flex-row gap-x-1">
+                  <Button
+                    onPress={() => deleteTask(ticket.id)}
+                    variant="solid"
+                    color="danger"
+                    className="mt-2 w-full"
+                  >
+                    Delete
+                  </Button>
+                </div>
               </div>
             </PopoverContent>
           </Popover>
