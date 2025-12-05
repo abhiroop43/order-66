@@ -17,3 +17,10 @@ export function getTicketsForUser(userId: string): Promise<TicketData[]> {
     orderBy: { updatedAt: "desc" },
   });
 }
+
+export function getTicketDetails(ticketId: string): Promise<TicketData | null> {
+  return db.ticket.findUnique({
+    where: { id: ticketId },
+    include: { assignedTo: true },
+  });
+}

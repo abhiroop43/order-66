@@ -19,8 +19,9 @@ const TaskList = ({ tickets }: TaskListProps) => {
     return <div>{tasks}</div>;
   } else {
     return (
-      <div className="flex justify-center items-center text-xl">
-        No tasks found. Start by creating a new task!
+      <div className="flex flex-col gap-y-2 justify-center items-center my-10">
+        <div className="text-xl">No tickets found.</div>
+        <div className="text-sm italic">Start by creating a new ticket!</div>
       </div>
     );
   }
